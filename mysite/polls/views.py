@@ -1,7 +1,11 @@
 from django.http import HttpResponse
+from django.template import loader
+from .models import Question
 
 def index(request):
-    return HttpResponse("Hola mundo. Estas son las encuestas de la aplicación.")
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    template = loader.get_template("polls/index.html")
+    return HttpResponse(output)
 
 def detail(request, question_id):
     return HttpResponse(f"Esta es la pregunta %s." % question_id)
